@@ -57,17 +57,100 @@
   font-size: 14px;
   line-height: 1.5;
   word-break: break-word;
+  position: relative;
 }
 
-.message-content-bot {
-  background-color: #f5f5f5;
-  margin-left: 8px;
+/* HTML内容样式 */
+.message-content p {
+  margin-bottom: 8px;
 }
 
+.message-content p:last-child {
+  margin-bottom: 0;
+}
+
+.message-content pre {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 12px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 8px 0;
+  white-space: pre;
+}
+
+.message-content code {
+  font-family: 'Courier New', Courier, monospace;
+  padding: 2px 4px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+  white-space: pre-wrap;
+}
+
+.message-content ul, .message-content ol {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.message-content a {
+  color: #2575FC;
+  text-decoration: none;
+}
+
+.message-content a:hover {
+  text-decoration: underline;
+}
+
+/* 用户消息样式优化 */
 .message-content-user {
-  background-color: #1890ff;
+  background: linear-gradient(120deg, #6A11CB 0%, #2575FC 100%);
   color: white;
   margin-right: 8px;
+  box-shadow: 0 2px 12px rgba(106, 17, 203, 0.15);
+}
+
+/* 添加气泡尾巴 */
+.message-content-user::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 0 6px 6px;
+  border-color: transparent transparent transparent #2575FC;
+}
+
+/* 机器人消息样式优化 */
+.message-content-bot {
+  background: linear-gradient(120deg, #FDFBFB 0%, #EBEDEE 100%);
+  margin-left: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  color: #333;
+}
+
+.message-content-bot::after {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 6px 6px 0;
+  border-color: transparent #FDFBFB transparent transparent;
+}
+
+/* 头像样式优化 */
+.message-space .ant-avatar {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.message-space .ant-avatar:hover {
+  transform: scale(1.1);
 }
 
 .input-container {
@@ -151,4 +234,15 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* 用户消息中的HTML元素颜色调整 */
+.message-content-user pre,
+.message-content-user code {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.message-content-user a {
+  color: #fff;
+  text-decoration: underline;
 } 
