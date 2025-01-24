@@ -117,7 +117,7 @@ const enhancedRequest = async (config, options = {}) => {
     cacheTime = CACHE_TIME,
     useQueue = false,
     retry = false,
-    retries = 3,
+    retries = 0,
     retryDelay = 1000
   } = options
 
