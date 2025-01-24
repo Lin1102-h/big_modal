@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, message } from 'antd'
 import ChatBox from './ChatBox'
 import { chatAPI } from '../services/api'
@@ -10,6 +10,15 @@ const Home = () => {
   ])
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
+
+  // 自动滚动到底部
+  useEffect(() => {
+    debugger
+    const messagesList = document.querySelector('.messages-list .ant-list-items')
+    if (messagesList) {
+      messagesList.scrollTop = messagesList.scrollHeight
+    }
+  }, [messages]) // 当消息列表更新时触发滚动
 
   const handleSend = async () => {
     if (!inputValue.trim() || loading) return
