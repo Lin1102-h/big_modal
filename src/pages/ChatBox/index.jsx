@@ -23,8 +23,8 @@ const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading }) =
               )}
               <div
                 className={`message-content ${message.type === 'user' ? 'message-content-user' : 'message-content-bot'}`}
+                dangerouslySetInnerHTML={{ __html: message.content }}
               >
-                {message.content}
               </div>
               {message.type === 'user' && (
                 <Avatar icon={<UserOutlined />} style={{ backgroundColor: '#87d068' }} />

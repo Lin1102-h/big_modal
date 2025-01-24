@@ -13,7 +13,6 @@ const Home = () => {
 
   // 自动滚动到底部
   useEffect(() => {
-    debugger
     const messagesList = document.querySelector('.messages-list .ant-list-items')
     if (messagesList) {
       messagesList.scrollTop = messagesList.scrollHeight
