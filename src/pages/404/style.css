@@ -1,0 +1,66 @@
+.ant-result {
+  padding: 48px 32px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+}
+
+.ant-result-404 .ant-result-image {
+  height: 200px;
+  margin-bottom: 24px;
+}
+
+.ant-result-title {
+  font-size: 72px;
+  font-weight: 600;
+  color: #1890ff;
+}
+
+.ant-result-subtitle {
+  font-size: 20px;
+  color: #8c8c8c;
+  margin: 16px 0 24px;
+}
+
+.ant-result-extra {
+  margin-top: 32px;
+}
+
+.ant-result-extra .ant-btn {
+  min-width: 120px;
+  height: 40px;
+  font-size: 16px;
+}
+
+/* 添加简单的hover效果 */
+.ant-result-extra .ant-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.15);
+}
+
+/* 添加过渡效果 */
+.ant-result-extra .ant-btn {
+  transition: all 0.3s ease;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 576px) {
+  .ant-result {
+    padding: 32px 16px;
+  }
+
+  .ant-result-404 .ant-result-image {
+    height: 160px;
+  }
+
+  .ant-result-title {
+    font-size: 48px;
+  }
+
+  .ant-result-subtitle {
+    font-size: 16px;
+  }
+} 

@@ -1,0 +1,34 @@
+.breadcrumb-container {
+  padding: 16px 24px;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.main-content {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* 路由过渡动画 */
+.fade-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 300ms;
+}
+
+.fade-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 300ms;
+} 
