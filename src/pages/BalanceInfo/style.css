@@ -1,0 +1,14 @@
+.balance-card {
+  margin: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.balance-title {
+  margin-bottom: 24px !important;
+  color: #1890ff;
+}
+
+.ant-card-bordered {
+  background-color: #fff;
+} 

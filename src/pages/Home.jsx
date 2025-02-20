@@ -1,43 +1,118 @@
-import React, { useState, useEffect } from 'react'
-import { Card, message } from 'antd'
+import React, { useState } from 'react'
+import { Card } from 'antd'
 import ChatBox from './ChatBox'
 import { chatAPI } from '../services/api'
 import './style.css'
 
 const Home = () => {
   const [messages, setMessages] = useState([
-    { type: 'bot', content: '你好！我是AI助手，有什么可以帮你的吗？' }
+    { type: 'bot', content: '你好！我是deepseek，有什么可以帮你的吗？',flag:true }
   ])
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
+  const [newChat, setNewChat] = useState(true)
+  const [useMessages, setUseMessages] = useState([])
 
-  // 自动滚动到底部
-  useEffect(() => {
-    const messagesList = document.querySelector('.messages-list .ant-list-items')
-    if (messagesList) {
-      messagesList.scrollTop = messagesList.scrollHeight
-    }
-  }, [messages]) // 当消息列表更新时触发滚动
+  // 添加消息到对话列表
+  const appendMessage = (type, content) => {
+    setMessages(prev => [...prev, { type, content }])
+  }
 
-  const handleSend = async () => {
-    if (!inputValue.trim() || loading) return
-    
-    const userMessage = { type: 'user', content: inputValue }
-    setMessages(prev => [...prev, userMessage])
-    setInputValue('')
-    setLoading(true)
+  // 更新最后一条消息的内容
+  const updateLastMessage = (content) => {
+    setMessages(prev => {
+      const newMessages = [...prev]
+      const lastMessage = newMessages[newMessages.length - 1]
+      lastMessage.content = content
+      lastMessage.flag = true
+      return newMessages
+    })
+  }
+
+  // 处理流式响应数据
+  const handleStreamResponse = async (response) => {
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder()
+    let accumulatedContent = '' // 用于累积内容
 
     try {
-      const response = await chatAPI.sendMessage(inputValue.trim())
-      setMessages(prev => [...prev, {
-        type: 'bot',
-        content: response.data
-      }])
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+
+        const chunk = decoder.decode(value)
+        const lines = chunk.split('\n')
+        
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(line.slice(6))
+              if (data.content === '[DONE]') return
+
+              // 累积新的内容
+              accumulatedContent += data.content
+              
+              // 更新消息，使用累积的内容而不是追加
+              setMessages(prev => {
+                const newMessages = [...prev]
+                newMessages[newMessages.length - 1].content = accumulatedContent
+                return newMessages
+              })
+            } catch (e) {
+              console.log('Parse error:', e)
+            }
+          }
+        }
+      }
+      return accumulatedContent
+    } finally {
+      reader.releaseLock()
+    }
+  }
+
+  // 处理错误情况
+  const handleError = (error) => {
+    console.log('Error:', error)
+    const errorMessage = error.status === 402 
+      ? '抱歉，余额不足' 
+      : '抱歉，发生错误了'
+    updateLastMessage(errorMessage)
+  }
+
+  // 发送消息
+  const handleSend = async () => {
+    if (!inputValue.trim() || loading) return
+
+    try {
+      setLoading(true)
+      // 添加用户消息
+      appendMessage('user', inputValue.trim())
+      // 添加机器人消息占位
+      appendMessage('bot', '')
+      setInputValue('')
+      const { data } = await chatAPI.sendMessage({ 
+        message: [...useMessages, { role: "user", content: inputValue.trim() }],
+        id: localStorage.getItem('userId'),
+        newChat
+      })
+      
+      const content = await handleStreamResponse(data)
+      setUseMessages(prev => [...prev,{ type: 'user', content: inputValue.trim() }, { type: 'assistant', content }])
+      setNewChat(false)
     } catch (error) {
-      message.error('发送消息失败，请重试')
+      handleError(error)
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleNewChat = () => {
+    setNewChat(true)
+    setMessages([
+      { type: 'bot', content: '你好！我是deepseek，有什么可以帮你的吗？' }
+    ])
+    setUseMessages([])
+    setInputValue('')
   }
 
   return (
@@ -56,6 +131,7 @@ const Home = () => {
         setInputValue={setInputValue}
         handleSend={handleSend}
         loading={loading}
+        onNewChat={handleNewChat}
       />
     </Card>
   )

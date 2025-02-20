@@ -65,7 +65,7 @@ const withCache = (key, fn, time = CACHE_TIME) => {
 // 创建axios实例
 const request = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000', // 设置基础URL
-  timeout: 15000000, // 请求超时时间
+  timeout: 15000000000, // 请求超时时间
   headers: {
     'Content-Type': 'application/json'
   }
@@ -78,6 +78,9 @@ request.interceptors.request.use(
     const token = localStorage.getItem('token')
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`
+    }
+    if(config.headers['accept'] === 'text/event-stream') {
+      config.responseType = 'stream'
     }
     return config
   },
@@ -94,51 +97,27 @@ request.interceptors.response.use(
     // 对响应数据做点什么
     const res = response.data
     
+    const { responseType, transformResponse } = response.config
+    if (responseType === 'stream') {
+      return transformResponse ? transformResponse(response) : response
+    }
+    
     // 这里可以根据后端的响应结构做相应的处理
     if (res.code !== 200) {
       message.error(res.message || '请求失败')
       return Promise.reject(new Error(res.message || '请求失败'))
     }
+
+    
     
     return res
   },
   error => {
     // 对响应错误做点什么
-    console.error('Response error:', error)
     message.error(error.message || '网络错误')
     return Promise.reject(error)
   }
 )
 
-// 增强的请求函数
-const enhancedRequest = async (config, options = {}) => {
-  const { 
-    useCache = false, 
-    cacheTime = CACHE_TIME,
-    useQueue = false,
-    retry = false,
-    retries = 0,
-    retryDelay = 1000
-  } = options
 
-  const requestFn = () => request(config)
-
-  let finalRequest = requestFn
-
-  if (retry) {
-    finalRequest = () => retryRequest(requestFn, retries, retryDelay)
-  }
-
-  if (useCache && (config.method === 'get' || config.method === 'GET')) {
-    const cacheKey = `${config.url}${JSON.stringify(config.params || {})}`
-    finalRequest = () => withCache(cacheKey, requestFn, cacheTime)
-  }
-
-  if (useQueue) {
-    return queue.add(finalRequest)
-  }
-
-  return finalRequest()
-}
-
-export { enhancedRequest as request, cache, queue } 
+export { request, cache, queue } 

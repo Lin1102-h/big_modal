@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout } from 'antd'
-
+import './style.css'
 const { Header } = Layout
 
 const ChatHeader = ({ title }) => {

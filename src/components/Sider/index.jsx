@@ -8,6 +8,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined
 } from '@ant-design/icons'
+import './style.css'
 
 const { Sider } = Layout
 
@@ -20,19 +21,25 @@ const ChatSider = ({ collapsed, setCollapsed }) => {
       key: '/chat',
       icon: <MessageOutlined />,
       label: '新对话',
-      onClick: () => navigate('/chat')
+      onClick: () => navigate('/ai/chat')
     },
     {
       key: '/history',
       icon: <HistoryOutlined />,
       label: '历史记录',
-      onClick: () => navigate('/history')
+      onClick: () => navigate('/ai/history')
+    },
+    {
+      key: '/insufficient',
+      icon: <HistoryOutlined />,
+      label: '余额查询',
+      onClick: () => navigate('/ai/insufficient')
     },
     {
       key: '/settings',
       icon: <SettingOutlined />,
       label: '设置',
-      onClick: () => navigate('/settings')
+      onClick: () => navigate('/ai/settings')
     }
   ]
 

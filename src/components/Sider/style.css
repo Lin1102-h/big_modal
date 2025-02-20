@@ -1,0 +1,17 @@
+.sider {
+  border-right: 1px solid #f0f0f0;
+  flex: 0 0 auto !important;
+}
+
+.sider-header {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.sider-title {
+  margin: 0;
+}

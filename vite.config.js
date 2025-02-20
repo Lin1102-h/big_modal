@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
 const SURL = 'http://localhost:3000/'
 // https://vite.dev/config/
 export default defineConfig({
@@ -10,5 +11,10 @@ export default defineConfig({
     proxy: {
       '/api': SURL,
     },
-  }
+  },
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'), // 路径别名
+    },
+  },
 })

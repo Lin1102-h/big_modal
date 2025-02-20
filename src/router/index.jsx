@@ -3,10 +3,12 @@ import { createBrowserRouter, Navigate } from 'react-router-dom'
 import BasicLayout from '../layouts/BasicLayout'
 import AuthGuard from '../components/AuthGuard'
 import { Spin } from 'antd'
+import Login from '../pages/login'
 
 // 懒加载组件
 const Home = lazy(() => import('../pages/Home'))
 const History = lazy(() => import('../pages/history'))
+const BalanceInfo = lazy(() => import('../pages/BalanceInfo'))
 const NotFound = lazy(() => import('../pages/404'))
 
 // 加载提示组件
@@ -18,7 +20,16 @@ const LoadingComponent = () => (
 
 const router = createBrowserRouter([
   {
+    path: '/login',
+    element: <Login />
+  },
+  {
     path: '/',
+    redirect: '/login',
+    element: <Navigate to="/login" replace />
+  },
+  {
+    path: '/ai',
     element: (
       <AuthGuard>
         <BasicLayout />
@@ -27,7 +38,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="/chat" replace />
+        element: <Navigate to="/ai/chat" replace />
       },
       {
         path: 'chat',
@@ -42,6 +53,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<LoadingComponent />}>
             <History />
+          </Suspense>
+        )
+      },
+      {
+        path: 'insufficient',
+        element: (
+          <Suspense fallback={<LoadingComponent />}>
+            <BalanceInfo />
           </Suspense>
         )
       }

@@ -6,9 +6,9 @@ const AuthGuard = ({ children }) => {
   const isAuthenticated = localStorage.getItem('token')
   
   // 如果需要登录但未登录，重定向到登录页
-  // if (!isAuthenticated && location.pathname !== '/login') {
-  //   return <Navigate to="/login" state={{ from: location }} replace />
-  // }
+  if (!isAuthenticated && location.pathname !== '/login') {
+    return <Navigate to="/login" state={{ from: location }} replace />
+  }
 
   return children
 }
