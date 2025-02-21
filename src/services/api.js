@@ -1,25 +1,21 @@
 import { request } from '../utils/request'
-import { message as Message } from 'antd'
-const info = () => {
-  message.info('余额不足');
-};
+
 // 通用GET请求
-export const get = (url, params, options = {}) => {
+export const get = (url, params) => {
   return request({
     url,
     method: 'get',
     params
-  }, { useCache: true, ...options })
+  })
 }
 
 // 通用POST请求
-export const post = (url, data, options = {}, reqOptions = {}) => {
+export const post = (url, data) => {
   return request({
     url,
     method: 'post',
     data,
-    ...reqOptions
-  }, { retry: true, ...options })
+  })
 }
 
 // AI聊天相关API
@@ -49,31 +45,17 @@ export const chatAPI = {
 
   // 获取历史记录（使用缓存）
   getHistory: (params) => {
-    return get('/api/chat/history', params, {
-      useCache: true,
-      cacheTime: 30000 // 30秒缓存
-    })
+    return get('/api/chat/history', params)
   },
 
   // 创建新对话（使用重试）
   createChat: () => {
-    return post('/api/chat/create', null, {
-      retry: true
-    })
-  },
-
-  // 清除历史记录缓存
-  clearHistoryCache: () => {
-    const cacheKey = '/api/chat/history'
-    cache.delete(cacheKey)
+    return post('/api/chat/create', null)
   },
 
   // 查询余额
   searchBalance: () => {
-    return get('/api/chat/balance', null, {
-      useCache: true,
-      cacheTime: 30000 // 30秒缓存
-    })
+    return get('/api/chat/balance', null,)
   }
 }
 
@@ -81,25 +63,16 @@ export const chatAPI = {
 export const userAPI = {
   // 登录（使用重试）
   login: (data) => {
-    return post('/api/user/login', data, {
-      retry: true,
-      retries: 3
-    })
+    return post('/api/user/login', data)
   },
 
   // 获取用户信息（使用缓存）
   getUserInfo: () => {
-    return get('/api/user/info', null, {
-      useCache: true,
-      cacheTime: 5 * 60 * 1000 // 5分钟缓存
-    })
+    return get('/api/user/info', null)
   },
 
   // 注册
   register: (data) => {
-    return post('/api/user/register', data, {
-      retry: true,
-      retries: 3
-    })
+    return post('/api/user/register', data)
   }
 } 
