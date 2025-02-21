@@ -42,6 +42,11 @@ export const chatAPI = {
     return { data: response };  // 直接返回原始 response 对象
   },
 
+  // 发送视频消息
+  sendVideoMessage: async ({message, id}) => {
+    return post('/api/chat/viodeSend', {message, id})
+  },
+
   // 获取历史记录（使用缓存）
   getHistory: (params) => {
     return get('/api/chat/history', params, {

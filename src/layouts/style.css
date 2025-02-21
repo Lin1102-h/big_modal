@@ -6,8 +6,8 @@
 
 .main-content {
   position: relative;
-  flex: 1;
-  overflow: hidden;
+  overflow: auto;
+  height: calc(100vh - 120px);
 }
 
 /* 路由过渡动画 */

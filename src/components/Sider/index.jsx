@@ -6,7 +6,8 @@ import {
   HistoryOutlined,
   SettingOutlined,
   MenuFoldOutlined,
-  MenuUnfoldOutlined
+  MenuUnfoldOutlined,
+  PlaySquareOutlined
 } from '@ant-design/icons'
 import './style.css'
 
@@ -34,6 +35,18 @@ const ChatSider = ({ collapsed, setCollapsed }) => {
       icon: <HistoryOutlined />,
       label: '余额查询',
       onClick: () => navigate('/ai/insufficient')
+    },
+    {
+      key: '/video',
+      icon: <PlaySquareOutlined />,
+      label: '视频对话',
+      onClick: () => navigate('/ai/video')
+    },
+    {
+      key: '/tasks',
+      icon: <HistoryOutlined />,
+      label: '任务列表',
+      onClick: () => navigate('/ai/tasks')
     },
     {
       key: '/settings',

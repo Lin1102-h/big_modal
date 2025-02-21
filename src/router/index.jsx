@@ -5,11 +5,14 @@ import AuthGuard from '../components/AuthGuard'
 import { Spin } from 'antd'
 import Login from '../pages/login'
 
+
 // 懒加载组件
 const Home = lazy(() => import('../pages/Home'))
 const History = lazy(() => import('../pages/history'))
 const BalanceInfo = lazy(() => import('../pages/BalanceInfo'))
 const NotFound = lazy(() => import('../pages/404'))
+const Video = lazy(() => import('../pages/video'))
+const VideoTaskList = lazy(() => import('../pages/video/task-list'))
 
 // 加载提示组件
 const LoadingComponent = () => (
@@ -57,6 +60,22 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: 'video',
+        element: (
+          <Suspense fallback={<LoadingComponent />}>
+            <Video />
+          </Suspense>
+        )
+      },
+      {
+        path: 'tasks',
+        element: (
+          <Suspense fallback={<LoadingComponent />}>
+            <VideoTaskList />
+          </Suspense>
+        ),
+      },
+      {
         path: 'insufficient',
         element: (
           <Suspense fallback={<LoadingComponent />}>
@@ -66,6 +85,7 @@ const router = createBrowserRouter([
       }
     ]
   },
+  
   {
     path: '*',
     element: (

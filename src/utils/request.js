@@ -64,8 +64,7 @@ const withCache = (key, fn, time = CACHE_TIME) => {
 
 // 创建axios实例
 const request = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000', // 设置基础URL
-  timeout: 15000000000, // 请求超时时间
+  timeout: 1000 * 60 * 60 * 24, // 请求超时时间
   headers: {
     'Content-Type': 'application/json'
   }

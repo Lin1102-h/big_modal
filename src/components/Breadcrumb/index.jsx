@@ -7,7 +7,9 @@ const breadcrumbNameMap = {
   '/ai/chat': '新对话',
   '/ai/history': '历史记录',
   '/ai/settings': '设置',
-  '/ai/insufficient': '余额查询'
+  '/ai/insufficient': '余额查询',
+  '/ai/video': '视频对话',
+  '/ai/tasks': '任务列表'
 }
 
 const AppBreadcrumb = () => {
