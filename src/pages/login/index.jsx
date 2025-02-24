@@ -18,7 +18,7 @@ const Login = () => {
       setLoading(true);
       const { confirmPassword,...data } = values
       const response = await userAPI[isRegister ? 'register' : 'login'](data);
-      debugger
+      
       if (response.code === 200) {
         if (isRegister) {
           message.success('注册成功，请登录');

@@ -9,7 +9,8 @@ const breadcrumbNameMap = {
   '/ai/settings': '设置',
   '/ai/insufficient': '余额查询',
   '/ai/video': '视频对话',
-  '/ai/tasks': '任务列表'
+  '/ai/tasks': '任务列表',
+  '/ai/game': '游戏'
 }
 
 const AppBreadcrumb = () => {

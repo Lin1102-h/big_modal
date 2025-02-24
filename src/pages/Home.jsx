@@ -3,7 +3,16 @@ import { Card } from 'antd'
 import ChatBox from './ChatBox'
 import { chatAPI } from '../services/api'
 import './style.css'
-
+import {marked} from 'marked'
+import hljs from "highlight.js"; // 引入 highlight.js
+import "highlight.js/styles/monokai-sublime.css";
+marked.setOptions({
+  highlight: function (code, language) {
+    const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
+    return hljs.highlight(validLanguage, code).value;
+  },
+  langPrefix: 'hljs', // 高亮代码块的类名前缀
+}); 
 const Home = () => {
   const [messages, setMessages] = useState([
     { type: 'bot', content: '你好！我是deepseek，有什么可以帮你的吗？',flag:true }
@@ -55,9 +64,10 @@ const Home = () => {
               // 更新消息，使用累积的内容而不是追加
               setMessages(prev => {
                 const newMessages = [...prev]
-                newMessages[newMessages.length - 1].content = accumulatedContent
+                newMessages[newMessages.length - 1].content = marked(accumulatedContent)
                 return newMessages
               })
+              
             } catch (e) {
               console.log('Parse error:', e)
             }

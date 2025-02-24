@@ -30,12 +30,12 @@ const ChatSider = ({ collapsed, setCollapsed }) => {
       label: '历史记录',
       onClick: () => navigate('/ai/history')
     },
-    {
-      key: '/insufficient',
-      icon: <HistoryOutlined />,
-      label: '余额查询',
-      onClick: () => navigate('/ai/insufficient')
-    },
+    // {
+    //   key: '/insufficient',
+    //   icon: <HistoryOutlined />,
+    //   label: '余额查询',
+    //   onClick: () => navigate('/ai/insufficient')
+    // },
     {
       key: '/video',
       icon: <PlaySquareOutlined />,
@@ -48,12 +48,18 @@ const ChatSider = ({ collapsed, setCollapsed }) => {
       label: '任务列表',
       onClick: () => navigate('/ai/tasks')
     },
-    {
-      key: '/settings',
-      icon: <SettingOutlined />,
-      label: '设置',
-      onClick: () => navigate('/ai/settings')
-    }
+    // {
+    //   key: '/game',
+    //   icon: <HistoryOutlined />,
+    //   label: '游戏',
+    //   onClick: () => navigate('/ai/game')
+    // },
+    // {
+    //   key: '/settings',
+    //   icon: <SettingOutlined />,
+    //   label: '设置',
+    //   onClick: () => navigate('/ai/settings')
+    // }
   ]
 
   return (

@@ -13,7 +13,7 @@ const BalanceInfo = lazy(() => import('../pages/BalanceInfo'))
 const NotFound = lazy(() => import('../pages/404'))
 const Video = lazy(() => import('../pages/video'))
 const VideoTaskList = lazy(() => import('../pages/video/task-list'))
-
+const Game = lazy(() => import('../pages/game'))
 // 加载提示组件
 const LoadingComponent = () => (
   <div style={{ padding: 24, textAlign: 'center' }}>
@@ -74,6 +74,14 @@ const router = createBrowserRouter([
             <VideoTaskList />
           </Suspense>
         ),
+      },
+      {
+        path: 'game',
+        element: (
+          <Suspense fallback={<LoadingComponent />}>
+            <Game />
+          </Suspense>
+        )
       },
       {
         path: 'insufficient',
