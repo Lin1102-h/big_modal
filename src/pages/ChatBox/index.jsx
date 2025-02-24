@@ -1,15 +1,14 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { Input, Button, Space, Avatar, List, Card, Tooltip } from 'antd'
-import { SendOutlined, PlusCircleOutlined } from '@ant-design/icons'
-import './style.css'
-import Robot from '@/assets/deepseek.svg'
-import User from '@/assets/user.svg'
-import hljs from "highlight.js"; // 引入 highlight.js
-import "highlight.js/styles/monokai-sublime.css";
+import React, { useRef, useState, useEffect } from "react"
+import { Input, Button, Space, Avatar, List, Card, Tooltip, Spin } from "antd"
+import { SendOutlined, PlusCircleOutlined } from "@ant-design/icons"
+import "./style.css"
+import Robot from "@/assets/deepseek.svg"
+import User from "@/assets/user.svg"
+import hljs from "highlight.js" // 引入 highlight.js
+import "highlight.js/styles/monokai-sublime.css"
 const { TextArea } = Input
 
-  const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onNewChat }) => {
-
+const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onNewChat }) => {
   const listRef = useRef(null)
   const [isUserScrolledUp, setIsUserScrolledUp] = useState(false)
   const scrollToBottom = () => {
@@ -19,48 +18,42 @@ const { TextArea } = Input
         const scrollHeight = listRef.current.scrollHeight
         const height = listRef.current.clientHeight
         const maxScrollTop = scrollHeight - height
-        
+
         listRef.current.scrollTo({
           top: maxScrollTop,
-          behavior: 'smooth'
+          behavior: "smooth",
         })
       }
     })
   }
-  
+
   useEffect(() => {
-    listRef.current.addEventListener('scroll', () => {
-      const { scrollTop, scrollHeight, clientHeight } = listRef.current;
-      const isAtBottom = scrollHeight - (scrollTop + clientHeight) < 10;
+    listRef.current.addEventListener("scroll", () => {
+      const { scrollTop, scrollHeight, clientHeight } = listRef.current
+      const isAtBottom = scrollHeight - (scrollTop + clientHeight) < 10
       if (!isAtBottom) {
-        setIsUserScrolledUp(true);
+        setIsUserScrolledUp(true)
       } else {
-        setIsUserScrolledUp(false);
+        setIsUserScrolledUp(false)
       }
     })
     return () => {
-      listRef.current?.removeEventListener('scroll', () => {})
+      listRef.current?.removeEventListener("scroll", () => {})
     }
   }, [])
 
   // 监听消息变化自动滚动
   useEffect(() => {
-    hljs.highlightAll();
     if (!isUserScrolledUp) {
       scrollToBottom()
     }
+    hljs.highlightAll();
   }, [messages])
-  
   return (
     <Card className="chat-card">
       <div className="new-chat-button">
         <Tooltip title="新建对话">
-          <Button 
-            type="primary"
-            shape="circle"
-            icon={<PlusCircleOutlined />}
-            onClick={onNewChat}
-          />
+          <Button type="primary" shape="circle" icon={<PlusCircleOutlined />} onClick={onNewChat} />
         </Tooltip>
       </div>
       <div className="messages-container">
@@ -70,21 +63,12 @@ const { TextArea } = Input
           itemLayout="horizontal"
           dataSource={messages}
           renderItem={(message, index) => (
-            <List.Item
-              key={index}
-              className={`message-item ${message.type === 'user' ? 'message-item-user' : 'message-item-bot'}`}
-            >
+            <List.Item key={index} className={`message-item ${message.type === "user" ? "message-item-user" : "message-item-bot"}`}>
               <Space align="start" className="message-space">
-                {message.type === 'bot' && (
-                  <Avatar src={Robot} />
-                )}
-                <div
-                  className={`message-content ${message.type === 'user' ? 'message-content-user' : 'message-content-bot'}`}
-                  dangerouslySetInnerHTML={{ __html:message.content}}
-                />
-                {message.type === 'user' && (
-                  <Avatar src={User}  />
-                )}
+                {message.type === "bot" && <Avatar src={Robot} />}
+                {message.content == "" && loading ? <Spin /> : <div className={`message-content ${message.type === "user" ? "message-content-user" : "message-content-bot"}`} dangerouslySetInnerHTML={{ __html: message.content }} />}
+
+                {message.type === "user" && <Avatar src={User} />}
               </Space>
             </List.Item>
           )}
@@ -104,13 +88,7 @@ const { TextArea } = Input
               disabled={loading}
               autoSize={{ minRows: 3, maxRows: 6 }}
             />
-            <Button
-              type="primary"
-              icon={<SendOutlined />}
-              onClick={handleSend}
-              loading={loading}
-              className="send-button"
-            >
+            <Button type="primary" icon={<SendOutlined />} onClick={handleSend} loading={loading} className="send-button">
               发送
             </Button>
           </div>
@@ -120,4 +98,4 @@ const { TextArea } = Input
   )
 }
 
-export default ChatBox 
+export default ChatBox

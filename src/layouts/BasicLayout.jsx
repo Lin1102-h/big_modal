@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Layout } from 'antd'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useOutlet } from 'react-router-dom'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import ChatSider from '../components/Sider'
 import ChatHeader from '../components/Header'
@@ -11,6 +11,7 @@ const { Content } = Layout
 const BasicLayout = () => {
   const [collapsed, setCollapsed] = useState(false)
   const location = useLocation()
+  const outlet = useOutlet();
   return (
       <Layout className="layout-container">
         <ChatSider collapsed={collapsed} setCollapsed={setCollapsed} />
@@ -27,7 +28,7 @@ const BasicLayout = () => {
                 classNames="fade"
                 unmountOnExit
               >
-                <Outlet />
+                {outlet}
               </CSSTransition>
             </SwitchTransition>
           </Content>

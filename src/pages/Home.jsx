@@ -73,6 +73,7 @@ const Home = () => {
             }
           }
         }
+        hljs.highlightAll();
       }
       return accumulatedContent
     } finally {
