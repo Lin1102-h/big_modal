@@ -4,13 +4,29 @@ import { SendOutlined, PlusCircleOutlined } from "@ant-design/icons"
 import "./style.css"
 import Robot from "@/assets/deepseek.svg"
 import User from "@/assets/user.svg"
-import hljs from "highlight.js" // 引入 highlight.js
 import "highlight.js/styles/monokai-sublime.css"
+import hljs from "highlight.js" // 引入 highlight.js
 const { TextArea } = Input
 
 const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onNewChat }) => {
   const listRef = useRef(null)
   const [isUserScrolledUp, setIsUserScrolledUp] = useState(false)
+
+  // 添加预处理高亮的函数
+  const processMessageContent = (content) => {
+    if (!content || typeof content !== 'string') return content;
+    
+    // 使用正则表达式匹配 <pre><code> 标签之间的内容
+    return content.replace(/<pre><code class="([^"]+)">([\s\S]+?)<\/code><\/pre>/g, (match, language, code) => {
+      try {
+        const highlighted = hljs.highlight(code.trim(), { language:language.slice(9) }).value;
+        return `<pre><code class="hljs ${language}">${highlighted}</code></pre>`;
+      } catch (e) {
+        return match; // 如果高亮失败，返回原始内容
+      }
+    });
+  };
+
   const scrollToBottom = () => {
     // 使用 RAF 确保在DOM更新后执行滚动
     requestAnimationFrame(() => {
@@ -42,13 +58,11 @@ const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onN
     }
   }, [])
 
-  // 监听消息变化自动滚动
+  // 修改 useEffect，移除高亮处理
   useEffect(() => {
-    console.log(messages)
     if (!isUserScrolledUp) {
       scrollToBottom()
     }
-    hljs.highlightAll()
   }, [messages])
 
   const emptyText = ()=>{
@@ -104,7 +118,7 @@ const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onN
                             <span className="result-title">回答</span>
                           </div>
                         )}
-                        <div className="result-content" dangerouslySetInnerHTML={{ __html: message.content }} />
+                        <div className="result-content" dangerouslySetInnerHTML={{ __html: processMessageContent(message.content) }} />
                       </div>
                     )}
                     {message.type === "user" && (

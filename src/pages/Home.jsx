@@ -4,15 +4,7 @@ import ChatBox from "./ChatBox"
 import { chatAPI } from "../services/api"
 import "./style.css"
 import { marked } from "marked"
-import hljs from "highlight.js" // 引入 highlight.js
-import "highlight.js/styles/monokai-sublime.css"
-marked.setOptions({
-  highlight: function (code, language) {
-    const validLanguage = hljs.getLanguage(language) ? language : "plaintext"
-    return hljs.highlight(validLanguage, code).value
-  },
-  langPrefix: "hljs", // 高亮代码块的类名前缀
-})
+
 const Home = () => {
   const [messages, setMessages] = useState([])
   const [inputValue, setInputValue] = useState("")
@@ -135,11 +127,10 @@ const Home = () => {
   const handleNewChat = () => {
     setLoading(false)
     setNewChat(true)
-    setMessages([{ type: "bot", content: "你好！我是deepseek，有什么可以帮你的吗？" }])
+    setMessages([])
     setUseMessages([])
     setInputValue("")
   }
-
   return (
     <Card
       className="chat-card"

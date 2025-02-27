@@ -28,7 +28,7 @@ const History = () => {
       setChats((val) => {
         return [...val, ...res.data.chats]
       })
-      setTotal(res.pagination.total)
+      setTotal(res.data.pagination.total)
       setPage((val) => {
         return val + 1
       })
@@ -73,10 +73,11 @@ const History = () => {
           padding: "0 16px",
         }}
       >
-        <InfiniteScroll dataLength={chats.length} next={fetchHistory} hasMore={chats.length < total} loader={<Skeleton paragraph={{ rows: 1 }} active />} endMessage={<Divider plain>没有更多了！</Divider>} scrollableTarget="scrollableDiv">
+        <InfiniteScroll dataLength={chats.length} next={fetchHistory} hasMore={chats.length < total} loader={loading&&<Skeleton paragraph={{ rows: 1 }} active />} endMessage={<Divider plain>没有更多了！</Divider>} scrollableTarget="scrollableDiv">
           <List
             className="history-list"
             dataSource={chats}
+            locale={{ emptyText: "暂无数据" }}
             renderItem={(chat) => (
               <List.Item className="history-item" onClick={() => handleCopy(chat.title)}>
                 <div className="history-item-content">{chat.title}</div>
