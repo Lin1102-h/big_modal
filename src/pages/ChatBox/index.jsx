@@ -44,11 +44,24 @@ const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onN
 
   // 监听消息变化自动滚动
   useEffect(() => {
+    console.log(messages)
     if (!isUserScrolledUp) {
       scrollToBottom()
     }
-    hljs.highlightAll();
+    hljs.highlightAll()
   }, [messages])
+
+  const emptyText = ()=>{
+    return (
+      <>
+      <div style={{fontSize: 24,fontWeight: 500,color:'#333',marginBottom:15 }}>
+        你好，我是云栖，有什么可以帮你的吗？
+      </div>
+      <div>我可以帮你写代码、读文件、写作各种创意内容，请把你的任务交给我吧~</div>
+      </>
+    )
+  }
+
   return (
     <Card className="chat-card">
       <div className="new-chat-button">
@@ -62,12 +75,43 @@ const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onN
           className="messages-list"
           itemLayout="horizontal"
           dataSource={messages}
+          locale={{ emptyText: emptyText() }}
           renderItem={(message, index) => (
             <List.Item key={index} className={`message-item ${message.type === "user" ? "message-item-user" : "message-item-bot"}`}>
               <Space align="start" className="message-space">
                 {message.type === "bot" && <Avatar src={Robot} />}
-                {message.content == "" && loading ? <Spin /> : <div className={`message-content ${message.type === "user" ? "message-content-user" : "message-content-bot"}`} dangerouslySetInnerHTML={{ __html: message.content }} />}
-
+                {message.type === "bot" && index === messages.length - 1 && loading ? (
+                  <div>
+                    <div>正在思考中。。。</div>
+                    <Spin />
+                  </div>
+                ) : (
+                  <div className={`message-content ${message.type === "user" ? "message-content-user" : "message-content-bot"}`}>
+                    {message.type === "bot" && message.reasoning && (
+                      <div className="message-reasoning">
+                        <div className="reasoning-header">
+                          <span className="reasoning-icon">🤔</span>
+                          <span className="reasoning-title">思考过程</span>
+                        </div>
+                        <div className="reasoning-content" dangerouslySetInnerHTML={{ __html: message.reasoning }} />
+                      </div>
+                    )}
+                    {message.type === "bot" && message.content && (
+                      <div className="message-result">
+                        {index !== 0 && (
+                          <div className="result-header">
+                            <span className="result-icon">💡</span>
+                            <span className="result-title">回答</span>
+                          </div>
+                        )}
+                        <div className="result-content" dangerouslySetInnerHTML={{ __html: message.content }} />
+                      </div>
+                    )}
+                    {message.type === "user" && (
+                      <div dangerouslySetInnerHTML={{ __html: message.content }} />
+                    )}
+                  </div>
+                )}
                 {message.type === "user" && <Avatar src={User} />}
               </Space>
             </List.Item>

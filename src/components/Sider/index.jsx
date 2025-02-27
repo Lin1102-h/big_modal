@@ -72,7 +72,7 @@ const ChatSider = ({ collapsed, setCollapsed }) => {
       theme="light"
     >
       <div className="sider-header">
-        {!collapsed && <h2 className="sider-title">AI Chat</h2>}
+        {!collapsed && <h2 className="sider-title">AI Yunxi</h2>}
         <Button 
           type="text"
           icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}

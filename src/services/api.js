@@ -17,7 +17,6 @@ export const post = (url, data) => {
     data,
   })
 }
-
 // AI聊天相关API
 export const chatAPI = {
   // 发送消息
@@ -34,7 +33,6 @@ export const chatAPI = {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
     return { data: response };  // 直接返回原始 response 对象
   },
 

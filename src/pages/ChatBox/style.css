@@ -302,3 +302,91 @@
   flex-direction: column;
   position: relative;
 }
+
+/* 新增：思考过程和回答的样式 */
+.message-reasoning,
+.message-result {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.message-reasoning:last-child,
+.message-result:last-child {
+  margin-bottom: 0;
+}
+
+.reasoning-header,
+.result-header {
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.reasoning-icon,
+.result-icon {
+  font-size: 16px;
+}
+
+.reasoning-title,
+.result-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+}
+
+.reasoning-content,
+.result-content {
+  padding: 12px;
+}
+
+.reasoning-content {
+  color: #666;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.result-content {
+  color: #333;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* 代码块样式优化 */
+.message-content pre {
+  background: #2d2d2d;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+
+.message-content code {
+  font-family: 'Fira Code', monospace;
+  font-size: 13px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .message-space {
+    max-width: 90%;
+  }
+  
+  .input-container {
+    padding: 16px;
+  }
+  
+  .reasoning-header,
+  .result-header {
+    padding: 6px 10px;
+  }
+  
+  .reasoning-content,
+  .result-content {
+    padding: 10px;
+  }
+}
