@@ -6,6 +6,7 @@ import Robot from "@/assets/deepseek.svg"
 import User from "@/assets/user.svg"
 import "highlight.js/styles/monokai-sublime.css"
 import hljs from "highlight.js" // 引入 highlight.js
+import { marked } from "marked"
 const { TextArea } = Input
 
 const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onNewChat }) => {
@@ -16,10 +17,17 @@ const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onN
   const processMessageContent = (content) => {
     if (!content || typeof content !== 'string') return content;
     
-    // 使用正则表达式匹配 <pre><code> 标签之间的内容
+    // 只处理代码块的高亮，其他内容保持不变
     return content.replace(/<pre><code class="([^"]+)">([\s\S]+?)<\/code><\/pre>/g, (match, language, code) => {
       try {
-        const highlighted = hljs.highlight(code.trim(), { language:language.slice(9) }).value;
+        // 解码 HTML 实体，因为后端可能已经转义过
+        const decodedCode = code.replace(/&lt;/g, '<')
+                               .replace(/&gt;/g, '>')
+                               .replace(/&amp;/g, '&')
+                               .replace(/&quot;/g, '"')
+                               .replace(/&#39;/g, "'");
+        
+        const highlighted = hljs.highlight(decodedCode.trim(), { language: language.slice(9) }).value;
         return `<pre><code class="hljs ${language}">${highlighted}</code></pre>`;
       } catch (e) {
         return match; // 如果高亮失败，返回原始内容
@@ -63,6 +71,7 @@ const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onN
     if (!isUserScrolledUp) {
       scrollToBottom()
     }
+    console.log(messages)
   }, [messages])
 
   const emptyText = ()=>{
