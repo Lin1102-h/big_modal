@@ -1,0 +1,95 @@
+.hot-search-container {
+  padding: 24px;
+  background: #f0f2f5;
+  min-height: 100%;
+}
+
+.hot-search-card {
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.title-icon {
+  margin-right: 8px;
+  font-size: 20px;
+  color: #ff4d4f;
+}
+
+.refresh-icon {
+  font-size: 16px;
+  color: #8c8c8c;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.refresh-icon:hover {
+  color: var(--ant-primary-color);
+}
+
+.hot-search-table {
+  margin-top: 8px;
+}
+
+/* 表格样式 */
+.rank-cell {
+  text-align: center;
+}
+
+.rank-tag {
+  min-width: 28px;
+  text-align: center;
+}
+
+.title-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hot-icon {
+  color: #ff4d4f;
+  font-size: 14px;
+}
+
+.new-tag {
+  padding: 0 4px;
+  font-size: 12px;
+}
+
+.hot-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #ff4d4f;
+}
+
+.hot-trend-icon {
+  font-size: 14px;
+}
+
+.category-tag {
+  border-radius: 4px;
+}
+
+/* 表格hover效果 */
+.hot-search-table .ant-table-tbody > tr:hover > td {
+  background-color: #f5f5f5;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+  .hot-search-container {
+    padding: 12px;
+  }
+
+  .hot-search-table .ant-table {
+    font-size: 14px;
+  }
+}

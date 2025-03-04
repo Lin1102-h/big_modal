@@ -74,3 +74,11 @@ export const userAPI = {
     return post('/api/user/register', data)
   }
 } 
+
+// 热门相关API
+export const hotAPI = {
+  // 获取热门数据
+  getHotData: () => {
+    return get('/api/hot/list', null)
+  }
+}

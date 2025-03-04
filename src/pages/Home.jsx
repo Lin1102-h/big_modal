@@ -1,9 +1,11 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { Card } from "antd"
 import ChatBox from "./ChatBox"
 import { chatAPI } from "../services/api"
-import "./style.css"
 import { marked } from "marked"
+import { useLocation } from 'react-router-dom'
+import "./style.css"
+
 
 const Home = () => {
   const [messages, setMessages] = useState([])
@@ -12,6 +14,15 @@ const Home = () => {
   const [newChat, setNewChat] = useState(true)
   const [useMessages, setUseMessages] = useState([])
   const streamRef = useRef({ content: "", reasoning: "" })
+  const location = useLocation()
+
+
+  useEffect(() => {
+    debugger
+    if (location.state && location.state.keyWord) {
+      setInputValue(location.state.keyWord)
+    }
+  }, [location.state])
 
   // 添加消息到对话列表
   const appendMessage = (type, content) => {

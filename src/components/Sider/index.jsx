@@ -48,12 +48,18 @@ const ChatSider = ({ collapsed, setCollapsed }) => {
       label: '任务列表',
       onClick: () => navigate('/ai/tasks')
     },
-    // {
-    //   key: '/game',
-    //   icon: <HistoryOutlined />,
-    //   label: '游戏',
-    //   onClick: () => navigate('/ai/game')
-    // },
+    {
+      key: '/game',
+      icon: <HistoryOutlined />,
+      label: '测试',
+      onClick: () => navigate('/ai/game')
+    },
+    {
+      key: '/hot',
+      icon: <HistoryOutlined />,
+      label: '热门',
+      onClick: () => navigate('/ai/hot')
+    },
     // {
     //   key: '/settings',
     //   icon: <SettingOutlined />,

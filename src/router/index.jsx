@@ -14,6 +14,7 @@ const NotFound = lazy(() => import('../pages/404'))
 const Video = lazy(() => import('../pages/video'))
 const VideoTaskList = lazy(() => import('../pages/video/task-list'))
 const Game = lazy(() => import('../pages/game'))
+const Hot = lazy(() => import('../pages/hot'))
 // 加载提示组件
 const LoadingComponent = () => (
   <div style={{ padding: 24, textAlign: 'center' }}>
@@ -88,6 +89,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<LoadingComponent />}>
             <BalanceInfo />
+          </Suspense>
+        )
+      },
+      {
+        path: 'hot',
+        element: (
+          <Suspense fallback={<LoadingComponent />}>
+            <Hot />
           </Suspense>
         )
       }
