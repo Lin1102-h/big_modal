@@ -156,4 +156,82 @@ const jiguchuanhua = (list, num) => {
   return list.indexOf(endName)
 }
 
-export { render, createElement, createTextNode, dec2bin, jiguchuanhua }
+
+class QueueElement {
+  constructor(element, priority) {
+    this.element = element
+    this.priority = priority
+  }
+}
+
+class PriorityQueue extends Queue {
+  constructor() {
+    super()
+  }
+  enqueue(element, priority) {
+    let added = false
+    const queueElement = new QueueElement(element, priority)
+    this.items.forEach((item, index) => {
+      if (item.priority > queueElement.priority) {
+        this.items.splice(index, 1, queueElement)
+        added = true
+        return
+      }
+    })
+    if (!added) {
+      this.items.push(queueElement)
+    }
+  }
+}
+
+class LinkedList {
+  head = null;
+  length = 0;
+  Node = class {
+    data;
+    next = null;
+    constructor(data) {
+      this.data = data
+    }
+  }
+  append(data) {
+    const newNode = new this.Node(data)
+
+    if (this.length === 0) {
+      this.head = newNode
+    } else {
+      let currentNode = this.head
+      while (currentNode.next !== null) {
+        currentNode = currentNode.next
+      }
+      currentNode.next = newNode
+    }
+    this.length++
+  }
+  toString(){
+    let currentNode = this.head
+    let result = ''
+    while(currentNode){
+      result += currentNode.data + ' '
+      currentNode = currentNode.next
+    }
+    return result
+  }
+  insert(position,data){
+    const newNode = new this.Node(data)
+    if(position < 0 || position > this.length) return
+    if(position === 0){
+      newNode.next = this.head
+      this.head = newNode
+    }else{
+      let currentNode = this.head
+      while(position>0){
+        position--
+        currentNode = currentNode.next
+      }
+    }
+  }
+}
+const linkedList = new LinkedList()
+
+export { render, createElement, createTextNode, dec2bin, jiguchuanhua, linkedList }

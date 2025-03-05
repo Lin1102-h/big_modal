@@ -1,3 +1,14 @@
+.layout-container {
+  min-height: 100vh;
+  display: flex;
+}
+
+.main-layout {
+  flex: 1 1 auto !important;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 .breadcrumb-container {
   padding: 16px 24px;
   background: #fff;
@@ -7,7 +18,7 @@
 .main-content {
   position: relative;
   overflow: auto;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 118px);
 }
 
 /* 路由过渡动画 */

@@ -15,3 +15,7 @@
 .sider-title {
   margin: 0;
 }
+
+.menu-container {
+  border-right: none;
+}

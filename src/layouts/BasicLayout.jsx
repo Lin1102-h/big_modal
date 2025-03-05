@@ -10,13 +10,15 @@ const { Content } = Layout
 
 const BasicLayout = () => {
   const [collapsed, setCollapsed] = useState(false)
+  const username = localStorage.getItem('username')
   const location = useLocation()
   const outlet = useOutlet();
+  
   return (
       <Layout className="layout-container">
         <ChatSider collapsed={collapsed} setCollapsed={setCollapsed} />
         <Layout className="main-layout">
-          <ChatHeader />
+          <ChatHeader username={username} />
           <div className="breadcrumb-container">
             <AppBreadcrumb />
           </div>

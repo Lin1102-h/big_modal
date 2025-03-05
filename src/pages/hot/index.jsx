@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Table, Card, Spin, Tag, Tooltip } from "antd"
+import { Table, Card, Spin, Tag, Tooltip,Image } from "antd"
 import { FireOutlined, RiseOutlined, NumberOutlined } from "@ant-design/icons"
 import { hotAPI } from "../../services/api"
 import { useNavigate } from 'react-router-dom'
@@ -58,7 +58,7 @@ const HotSearch = () => {
       key: "word",
       render: (text, record) => (
         <div className="title-cell" onClick={() => handleWordClick(text)}>
-          <a href={'javascript:void(0)'} >
+          <a  >
             {text}
           </a>
           {record.isHot && (
@@ -91,10 +91,15 @@ const HotSearch = () => {
       dataIndex: "icon_desc",
       key: "icon_desc",
       width: 120,
-      render: (icon_desc) => (
-        <Tag color="blue" className="category-tag">
-          {icon_desc}
-        </Tag>
+      render: (text,record) => (
+        <Image
+              width={30}
+              src={record.icon}
+              preview={false}
+            />
+        // <Tag color="blue" className="category-tag">
+        //   {icon_desc}
+        // </Tag>
       ),
     },
   ]
@@ -119,7 +124,7 @@ const HotSearch = () => {
           <Table
             columns={columns}
             dataSource={hotData}
-            rowKey="rank"
+            rowKey={(record) => record.word}
             pagination={false}
             scroll={{ y: window.innerHeight - 350 }}
             className="hot-search-table"

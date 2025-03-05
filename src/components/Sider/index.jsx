@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Button, Menu } from 'antd'
+import { Layout, Button, Menu, Image } from 'antd'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
   MessageOutlined,
@@ -9,6 +9,7 @@ import {
   MenuUnfoldOutlined,
   PlaySquareOutlined
 } from '@ant-design/icons'
+import logo from '../../assets/deepseek.svg'
 import './style.css'
 
 const { Sider } = Layout
@@ -78,7 +79,7 @@ const ChatSider = ({ collapsed, setCollapsed }) => {
       theme="light"
     >
       <div className="sider-header">
-        {!collapsed && <h2 className="sider-title">AI Yunxi</h2>}
+        {!collapsed && <Image src={logo} width={50} className="sider-logo" preview={false}/>}
         <Button 
           type="text"
           icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -90,6 +91,7 @@ const ChatSider = ({ collapsed, setCollapsed }) => {
         mode="inline"
         selectedKeys={[location.pathname]}
         items={menuItems}
+        theme="light"
       />
     </Sider>
   )

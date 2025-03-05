@@ -6,7 +6,6 @@ import Robot from "@/assets/deepseek.svg"
 import User from "@/assets/user.svg"
 import "highlight.js/styles/monokai-sublime.css"
 import hljs from "highlight.js" // 引入 highlight.js
-import { marked } from "marked"
 const { TextArea } = Input
 
 const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onNewChat }) => {
@@ -16,17 +15,17 @@ const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onN
   // 添加预处理高亮的函数
   const processMessageContent = (content) => {
     if (!content || typeof content !== 'string') return content;
-    
+
     // 只处理代码块的高亮，其他内容保持不变
     return content.replace(/<pre><code class="([^"]+)">([\s\S]+?)<\/code><\/pre>/g, (match, language, code) => {
       try {
         // 解码 HTML 实体，因为后端可能已经转义过
         const decodedCode = code.replace(/&lt;/g, '<')
-                               .replace(/&gt;/g, '>')
-                               .replace(/&amp;/g, '&')
-                               .replace(/&quot;/g, '"')
-                               .replace(/&#39;/g, "'");
-        
+          .replace(/&gt;/g, '>')
+          .replace(/&amp;/g, '&')
+          .replace(/&quot;/g, '"')
+          .replace(/&#39;/g, "'");
+
         const highlighted = hljs.highlight(decodedCode.trim(), { language: language.slice(9) }).value;
         return `<pre><code class="hljs ${language}">${highlighted}</code></pre>`;
       } catch (e) {
@@ -62,7 +61,7 @@ const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onN
       }
     })
     return () => {
-      listRef.current?.removeEventListener("scroll", () => {})
+      listRef.current?.removeEventListener("scroll", () => { })
     }
   }, [])
 
@@ -74,13 +73,13 @@ const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onN
     console.log(messages)
   }, [messages])
 
-  const emptyText = ()=>{
+  const emptyText = () => {
     return (
       <>
-      <div style={{fontSize: 24,fontWeight: 500,color:'#333',marginBottom:15 }}>
-        你好，我是云栖，有什么可以帮你的吗？
-      </div>
-      <div>我可以帮你写代码、读文件、写作各种创意内容，请把你的任务交给我吧~</div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 500, color: '#333', marginBottom: 15 }}>
+          你好，我是云栖，有什么可以帮你的吗？
+        </div>
+        <div>我可以帮你写代码、读文件、写作各种创意内容，请把你的任务交给我吧~</div>
       </>
     )
   }
@@ -155,7 +154,7 @@ const ChatBox = ({ messages, inputValue, setInputValue, handleSend, loading, onN
               disabled={loading}
               autoSize={{ minRows: 3, maxRows: 6 }}
             />
-            <Button type="primary" icon={<SendOutlined />} onClick={handleSend} loading={loading} className="send-button">
+            <Button size="small" type="primary" icon={<SendOutlined />} onClick={handleSend} loading={loading} className="send-button">
               发送
             </Button>
           </div>

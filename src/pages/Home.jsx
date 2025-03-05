@@ -18,7 +18,6 @@ const Home = () => {
 
 
   useEffect(() => {
-    debugger
     if (location.state && location.state.keyWord) {
       setInputValue(location.state.keyWord)
     }

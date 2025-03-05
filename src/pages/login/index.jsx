@@ -27,6 +27,7 @@ const Login = () => {
         } else {
           localStorage.setItem('token',response.data.token)
           localStorage.setItem('userId',response.data.user.id)
+          localStorage.setItem('username',response.data.user.username)
           dispatch(setUserInfo({ userId: response.data.user.id, token: response.data.token }))
           message.success('登录成功');
           navigate('/ai/chat');

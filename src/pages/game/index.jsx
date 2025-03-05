@@ -1,5 +1,5 @@
 import {useEffect,useRef} from 'react'
-import {render,dec2bin,jiguchuanhua} from '@/utils/utils'
+import {render,dec2bin,jiguchuanhua,linkedList} from '@/utils/utils'
 
 
 const Game = () => {
@@ -7,9 +7,14 @@ const Game = () => {
   const ref = useRef(null)
 
   const handleClick = ()=>{
-    const names = ["lily", "lucy", "tom", "tony", "jack"];
-    const result = jiguchuanhua(names,4)
-    console.log(result)
+    linkedList.append('A')
+    linkedList.append('B')
+    linkedList.append('C')
+    linkedList.append('D')
+    console.log(linkedList);
+    console.log(linkedList.toString());
+    
+
     // debugger
     // const time = new Date().getTime()
     // const element = <h1>{time}</h1>
