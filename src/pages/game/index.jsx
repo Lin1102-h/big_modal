@@ -1,5 +1,5 @@
 import {useEffect,useRef} from 'react'
-import {render,dec2bin,jiguchuanhua,linkedList} from '@/utils/utils'
+import {render,dec2bin,jiguchuanhua,linkedList,getToltal,getToltal2} from '@/utils/utils'
 
 
 const Game = () => {
@@ -7,12 +7,17 @@ const Game = () => {
   const ref = useRef(null)
 
   const handleClick = ()=>{
-    linkedList.append('A')
-    linkedList.append('B')
-    linkedList.append('C')
-    linkedList.append('D')
-    console.log(linkedList);
-    console.log(linkedList.toString());
+
+
+    // console.log(getToltal([1,2,3,4,5],9));
+    console.log(getToltal2([9,9,9,9,9,9,9,],[9,9,9,9]));
+
+    // linkedList.append('A')
+    // linkedList.append('B')
+    // linkedList.append('C')
+    // linkedList.append('D')
+    // console.log(linkedList);
+    // console.log(linkedList.toString());
     
 
     // debugger
